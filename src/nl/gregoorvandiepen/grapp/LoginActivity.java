@@ -1,4 +1,8 @@
-package com.simons.grapp;
+package nl.gregoorvandiepen.grapp;
+
+import nl.gregoorvandiepen.grapp.R;
+import nl.gregoorvandiepen.grapp.data.DatabaseHandler;
+import nl.gregoorvandiepen.grapp.data.UserFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,16 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.simons.grapp.data.DatabaseHandler;
-import com.simons.grapp.data.UserFunctions;
 
-public class RegisterActivity extends Activity {
-    Button btnRegister;
-    Button btnLinkToLogin;
-    EditText inputFullName;
+public class LoginActivity extends Activity {
+    Button btnLogin;
+    Button btnLinkToRegister;
     EditText inputEmail;
     EditText inputPassword;
-    TextView registerErrorMsg;
+    TextView loginErrorMsg;
 
     // JSON Response node names
     private static String KEY_SUCCESS = "success";
@@ -35,33 +36,30 @@ public class RegisterActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_register);
+	setContentView(R.layout.activity_login);
 
 	// Importing all assets like buttons, text fields
-	inputFullName = (EditText) findViewById(R.id.registerName);
-	inputEmail = (EditText) findViewById(R.id.registerEmail);
-	inputPassword = (EditText) findViewById(R.id.registerPassword);
-	btnRegister = (Button) findViewById(R.id.btnRegister);
-	btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
-	registerErrorMsg = (TextView) findViewById(R.id.register_error);
+	inputEmail = (EditText) findViewById(R.id.loginEmail);
+	inputPassword = (EditText) findViewById(R.id.loginPassword);
+	btnLogin = (Button) findViewById(R.id.btnLogin);
+	btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+	loginErrorMsg = (TextView) findViewById(R.id.login_error);
 
-	// Register Button Click event
-	btnRegister.setOnClickListener(new View.OnClickListener() {
+	// Login button Click Event
+	btnLogin.setOnClickListener(new View.OnClickListener() {
 	    public void onClick(View view) {
-		String name = inputFullName.getText().toString();
 		String email = inputEmail.getText().toString();
 		String password = inputPassword.getText().toString();
-		new MyAsyncTask().execute(name, email, password);
+		new MyAsyncTask().execute(email, password);
 	    }
 	});
 
-	// Link to Login Screen
-	btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
+	// Link to Register Screen
+	btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
 
 	    public void onClick(View view) {
-		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+		Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
 		startActivity(i);
-		// Close Registration View
 		finish();
 	    }
 	});
@@ -71,20 +69,19 @@ public class RegisterActivity extends Activity {
 
 	protected JSONObject doInBackground(String... params) {
 	    UserFunctions userFunction = new UserFunctions();
-	    if (params.length != 3)
+	    if (params.length != 2)
 		return null;
-	    JSONObject json = userFunction.registerUser(params[0], params[1], params[2]);
+	    JSONObject json = userFunction.loginUser(params[0], params[1]);
 	    return json;
 	}
 
 	protected void onPostExecute(JSONObject json) {
-	    // check for login response
 	    try {
 		if (json != null && json.getString(KEY_SUCCESS) != null) {
-		    registerErrorMsg.setText("");
+		    loginErrorMsg.setText("");
 		    String res = json.getString(KEY_SUCCESS);
 		    if (Integer.parseInt(res) == 1) {
-			// user successfully registred
+			// user successfully logged in
 			// Store user details in SQLite Database
 			DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 			JSONObject json_user = json.getJSONObject("user");
@@ -93,16 +90,19 @@ public class RegisterActivity extends Activity {
 			UserFunctions userFunction = new UserFunctions();
 			userFunction.logoutUser(getApplicationContext());
 			db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
+
 			// Launch Dashboard Screen
 			Intent dashboard = new Intent(getApplicationContext(), DashboardActivity.class);
+
 			// Close all views before launching Dashboard
 			dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(dashboard);
-			// Close Registration Screen
+
+			// Close Login Screen
 			finish();
 		    } else {
-			// Error in registration
-			registerErrorMsg.setText("Error occured in registration");
+			// Error in login
+			loginErrorMsg.setText("Incorrect username/password");
 		    }
 		}
 	    } catch (JSONException e) {

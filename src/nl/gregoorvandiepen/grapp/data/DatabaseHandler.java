@@ -1,4 +1,4 @@
-package com.simons.grapp.data;
+package nl.gregoorvandiepen.grapp.data;
 
 import java.util.HashMap;
 

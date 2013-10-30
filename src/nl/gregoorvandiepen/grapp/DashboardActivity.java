@@ -1,6 +1,7 @@
-package com.simons.grapp;
+package nl.gregoorvandiepen.grapp;
 
 import java.io.IOException;
+import nl.gregoorvandiepen.grapp.R;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
