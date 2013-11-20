@@ -16,6 +16,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,18 +30,14 @@ public class JSONRequest {
 	private String url;
 
 	// constructor
-	public JSONRequest(String url, NameValuePair[] params,
-			OnJSONParseFinishedListener delegate) {
-
+	public JSONRequest(String url, OnJSONParseFinishedListener delegate) {
 		this.delegate = delegate;
 		this.url = url;
-
-		makeHttpRequest(params);
 	}
 
 	// function get json from url
 	// by making HTTP POST or GET mehtod
-	private void makeHttpRequest(NameValuePair[] params) {
+	public void makeHttpRequest(NameValuePair[] params) {
 
 		HTTPTask asyncTask = new HTTPTask();
 		asyncTask.execute(params);
@@ -63,10 +60,14 @@ public class JSONRequest {
 				for (NameValuePair nvp : params) {
 					paramList.add(nvp);
 				}
+
 				httpPost.setEntity(new UrlEncodedFormEntity(paramList));
 
+				// Execute
 				HttpResponse httpResponse = httpClient.execute(httpPost);
 				HttpEntity httpEntity = httpResponse.getEntity();
+
+				// Read the response
 				InputStream is = httpEntity.getContent();
 
 				BufferedReader reader = new BufferedReader(

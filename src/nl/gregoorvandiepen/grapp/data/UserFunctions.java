@@ -17,7 +17,8 @@ public class UserFunctions {
 	// Local configuration
 
 	// Special alias to host loopback
-	private static String registerURL = "http://vandiepen.org:9999/register";
+	private static final String registerURL = "http://vandiepen.org:9999/register";
+	private static final String loginURL = "http://vandiepen.org:9999/authenticate";
 
 	private static String login_tag = "login";
 	private static String register_tag = "register";
@@ -50,14 +51,20 @@ public class UserFunctions {
 	 * @param email
 	 * @param password
 	 * */
-	public void registerUser(String googleAccount,
-			OnJSONParseFinishedListener listener) {
+	public void registerUser(String googleAccount, OnJSONParseFinishedListener listener) {
 		// Building Parameters
 
-		NameValuePair[] params = new NameValuePair[] { new BasicNameValuePair(
-				"googleAccount", googleAccount) };
+		NameValuePair[] params = new NameValuePair[] { new BasicNameValuePair("google", googleAccount) };
 
-		new JSONRequest(registerURL, params, listener);
+		JSONRequest requester = new JSONRequest(registerURL, listener);
+		requester.makeHttpRequest(params);
+	}
+
+	public void authenticateUser(String token, OnJSONParseFinishedListener listener) {
+		NameValuePair[] params = new NameValuePair[] { new BasicNameValuePair("token", token) };
+
+		JSONRequest requester = new JSONRequest(loginURL, listener);
+		requester.makeHttpRequest(params);
 	}
 
 	/**
