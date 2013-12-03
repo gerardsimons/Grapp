@@ -9,6 +9,7 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -19,16 +20,17 @@
         </activity>
         <activity
             android:name="nl.gregoorvandiepen.grapp.LoginActivity"
-            android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="nl.gregoorvandiepen.grapp.RecordActivity" >
+        </activity>
         <activity
-            android:name="nl.gregoorvandiepen.grapp.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:name="nl.gregoorvandiepen.grapp.ListenActivity"
+            android:label="@string/title_activity_listen" >
         </activity>
     </application>
 

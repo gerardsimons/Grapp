@@ -63,12 +63,14 @@ public class LoginActivity extends Activity {
 		mAccountManager = AccountManager.get(this);
 
 		token = loadToken();
-		// if (token == null) {
-		// Log.i(TAG, "Token found = " + token);
-		// btnLogin.setVisibility(View.GONE);
-		// } else {
-		// btnLinkToRegister.setVisibility(View.GONE);
-		// }
+		if (token == null) {
+			Log.i(TAG, "No token found! Register first");
+			// btnLogin.setVisibility(View.GONE);
+		} else {
+			Log.i(TAG, "Token found = " + token);
+			Intent i = new Intent(this, DashboardActivity.class);
+			startActivity(i); 
+		}
 
 		// Login button Click Event
 		btnLogin.setOnClickListener(new View.OnClickListener() {

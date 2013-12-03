@@ -25,7 +25,8 @@ public class DashboardActivity extends Activity implements OnPreparedListener, M
 
     private ProgressBar streamProgress;
 
-    private final String testMP3 = "http://www.simons-software.com/grapp/audio/test.mp3";
+    //private final String testMP3 = "http://www.simons-software.com/grapp/audio/test.mp3";
+    private final String testMP3 = "http://gregoorvandiepen.nl/grapp/audio/test.mp3";
 
     private Handler handler = new Handler();
 
