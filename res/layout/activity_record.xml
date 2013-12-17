@@ -8,9 +8,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RecordActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Record"
+        android:id="@+id/recordBttn"
+        android:textSize="20sp"
+        android:layout_below="@+id/jokeTitleEditText"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Save"
+        android:id="@+id/saveRecording"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/recordBttn"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/jokeTitleEditText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:hint="Grap Titel" />
 </RelativeLayout>
