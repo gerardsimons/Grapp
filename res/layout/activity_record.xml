@@ -1,37 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/purple"
+    android:orientation="vertical"
     tools:context=".RecordActivity" >
+	
+	<LinearLayout
+	    android:id="@+id/tabs"
+	    android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:orientation="horizontal"
+	    android:weightSum="2" >
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="Record"
-        android:id="@+id/recordBttn"
-        android:textSize="20sp"
-        android:layout_below="@+id/jokeTitleEditText"
-        android:layout_centerHorizontal="true" />
+        <ImageView
+            android:id="@+id/record_switch_to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/mic" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="Save"
-        android:id="@+id/saveRecording"
-        android:textSize="20dp"
-        android:visibility="invisible"
-        android:layout_below="@+id/recordBttn"
-        android:layout_centerHorizontal="true" />
+        <ImageView
+            android:id="@+id/listen_switch_to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:onClick="clickSpeaker"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/speaker" />
 
-    <EditText
-        android:layout_width="fill_parent"
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/jokeTitleEditText"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:hint="Grap Titel" />
-</RelativeLayout>
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" >
+
+         <Button
+        	android:layout_width="fill_parent"
+        	android:layout_height="50dp"
+        	android:text="Record"
+        	android:id="@+id/recordBttn"
+        	android:textSize="20sp"
+        	android:layout_below="@+id/jokeTitleEditText"
+        	android:layout_centerHorizontal="true" />
+	
+    	<Button
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="50dp"
+    	    android:text="Save"
+    	    android:id="@+id/saveRecording"
+    	    android:textSize="20sp"
+    	    android:visibility="invisible"
+    	    android:layout_below="@+id/recordBttn"
+    	    android:layout_centerHorizontal="true" />
+
+    	<EditText
+    	    android:id="@+id/jokeTitleEditText"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentLeft="true"
+    	    android:layout_alignParentTop="true"
+    	    android:background="@color/white"
+    	    android:hint="Grap Titel" />
+
+    </RelativeLayout>
+   
+</LinearLayout>

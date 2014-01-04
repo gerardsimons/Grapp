@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,11 +44,12 @@ public class RecordActivity extends Activity {
     //Used to store the file locally
     private final String fileName = "joke.3gp";
     private String jokeTitle = null;
-    private String userToken;
+    private String token;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_record);
 
         Log.d(TAG,"********************************************");
@@ -56,13 +58,13 @@ public class RecordActivity extends Activity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        userToken = bundle.getString(LoginActivity.TOKEN_KEY);
-        if(userToken == null) {
+        token = bundle.getString(LoginActivity.TOKEN_KEY);
+        if(token == null) {
             //Something went wrong
             Log.e(TAG,"Could not get the user's token.");
             finish();
         } else {
-            Log.d(TAG,"The user token was succesfully received : " + userToken);
+            Log.d(TAG,"The user token was succesfully received : " + token);
         }
 
         saveButton = (Button) findViewById(R.id.saveRecording);
@@ -73,7 +75,7 @@ public class RecordActivity extends Activity {
                     if(jokeTitle != null) {
                         final ProgressDialog dialog = ProgressDialog.show(RecordActivity.this,"","Grap Uploaden...",false);
                         //Save the recording and upload to the server
-                        UserFunctions.uploadJoke(userToken,jokeTitle,recordFile,new OnJSONParseFinishedListener() {
+                        UserFunctions.uploadJoke(token,jokeTitle,recordFile,new OnJSONParseFinishedListener() {
                             @Override
                             public void jsonReceived(JSONObject JSON) {
                                     Log.d(TAG,"JSON Response Received!");
@@ -81,7 +83,7 @@ public class RecordActivity extends Activity {
                                         @Override
                                         public void run() {
                                             dialog.hide();
-                                            Toast.makeText(RecordActivity.this,"Grap is geÃ¼pload.",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RecordActivity.this,"Grap is geüpload.",Toast.LENGTH_SHORT).show();
                                         }
                                 });
                                 boolean success = false;
@@ -193,6 +195,11 @@ public class RecordActivity extends Activity {
             finish();
         }
     }
-
+    
+    public void clickSpeaker(View v){
+        Intent intent = new Intent(this, ListenActivity.class);
+        intent.putExtra(LoginActivity.TOKEN_KEY, token);
+        startActivity(intent);
+    }
 
 }

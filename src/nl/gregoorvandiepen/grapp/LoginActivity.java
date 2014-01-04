@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class LoginActivity extends Activity {
 
 	// JSON reply keys
 	private static final String SUCCESS_KEY = "success";
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,11 +85,12 @@ public class LoginActivity extends Activity {
                             LoginActivity.this.token = token;
                             storeToken();
                             Log.i(TAG, "Successfully logged in.");
-                            startRecordActivity();
+                            //startRecordActivity();
+                            startListenActivity();
                         }
                         else {
                             //Login failed
-                            Toast.makeText(LoginActivity.this,"Log in failed.",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this,"Log in failed.",Toast.LENGTH_SHORT).show();  // Deze zorgde voor een window leak
                             Log.e(TAG,"Login failed.");
                         }
                     } catch (JSONException e) {
@@ -107,12 +109,12 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private void startRecordActivity() {
-        Intent intent = new Intent(LoginActivity.this, RecordActivity.class);
+    private void startListenActivity() {
+        Intent intent = new Intent(LoginActivity.this, ListenActivity.class);
         intent.putExtra(TOKEN_KEY,token);
         startActivity(intent);
     }
-
+    
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -125,7 +127,6 @@ public class LoginActivity extends Activity {
 			for (int i = 0; i < size; i++) {
 				names[i] = accounts[i].name;
 			}
-            names[size] = "test_2@gmail.com";
 			builder.setItems(names, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					// Stuff to do when the account is selected by the user
@@ -162,12 +163,13 @@ public class LoginActivity extends Activity {
 			public void jsonReceived(JSONObject json) {
 				try {
                     if(json.getBoolean(SUCCESS_KEY)) {
-					    String token = json.getString("token");
+                    	JSONArray tokenJSONArray = json.getJSONArray("token");
+					    String token = tokenJSONArray.getJSONObject(0).getString("token");
 					    Log.i(TAG, "Received token = " + token);
 					    // Store token
                         LoginActivity.this.token = token;
 					    storeToken();
-                        startRecordActivity();
+					    startListenActivity();
                     }
                     else {
                         Log.e(TAG,"Registration failed.");
