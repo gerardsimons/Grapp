@@ -123,7 +123,7 @@ public class LoginActivity extends Activity {
 			builder.setTitle("Select a Google account");
 			final Account[] accounts = mAccountManager.getAccountsByType("com.google");
 			final int size = accounts.length;
-			final String[] names = new String[size+1];
+			final String[] names = new String[size];
 			for (int i = 0; i < size; i++) {
 				names[i] = accounts[i].name;
 			}
