@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/joke_row_id"
+    android:layout_width="match_parent"
+    android:layout_height="50dp" >
+	
+	<ImageView
+	    android:id="@+id/joke_row_play_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_centerVertical="true"
+	    android:layout_marginTop="15dp"
+	    android:adjustViewBounds="true"
+	    android:contentDescription="Playbutton"
+	    android:src="@drawable/statelist_play_button" />
+
+	<ImageView
+	    android:id="@+id/joke_row_dislike_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true"
+	    android:layout_marginTop="15dp"
+	    android:adjustViewBounds="true"
+	    android:contentDescription="Dislike"
+	    android:src="@drawable/dislike" />
+	
+	<ImageView
+	    android:id="@+id/joke_row_like_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_centerVertical="true"
+	    android:layout_marginTop="15dp"
+	    android:layout_toLeftOf="@id/joke_row_dislike_button"
+	    android:adjustViewBounds="true"
+	    android:contentDescription="Like"
+	    android:src="@drawable/like" />
+
+	<TextView
+	    android:id="@+id/joke_row_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_centerVertical="true"
+	    android:layout_toLeftOf="@+id/joke_row_like_button"
+	    android:layout_toRightOf="@id/joke_row_play_button"
+	    android:paddingLeft="3dp"
+	    android:paddingRight="10dp"
+	    android:paddingTop="3dp"
+	    android:text="Een neger die een kip helemaal opeet"
+	    android:textSize="20sp" />
+
+</RelativeLayout>
